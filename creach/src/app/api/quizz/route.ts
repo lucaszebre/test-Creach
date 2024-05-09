@@ -1,5 +1,5 @@
 import prisma from "@/lib/db";
-import {  newQuizzSchema } from "@/types";
+import {  editQuizzSchema, newQuizzSchema } from "@/types";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
@@ -46,6 +46,78 @@ export async function POST(req: Request, res: Response) {
       .select();
     
         
+       if(error){
+         return NextResponse.json(
+          { error: error},
+           {
+             status: 400,
+           }
+         );
+     }
+
+   
+
+    
+     return NextResponse.json(
+       {
+         data: data,
+      },
+       {
+         status: 200,
+       }
+     );
+  } catch (error) {
+      return NextResponse.json(
+        { error: error},
+        {
+          status: 400,
+        }
+      );
+    
+  }
+}
+
+export async function PUT(req: Request, res: Response) {
+  try {
+    const supabase = createClient()
+    const user = supabase.auth.getUser()
+    if(!user){
+        return NextResponse.json(
+            { error: "Need to be login" },
+            {
+              status: 400,
+            }
+          );
+    }
+  
+    const body = await req.json();
+
+    console.log(body)
+    const newQuizz = editQuizzSchema.parse(body);
+
+
+    // need to recreate the json to fit the model , so we can the quizz can display nicely later
+    const mappedQuestions = newQuizz.questions.map(question => ({
+      title: question.title,
+      value: question.value ?? "",
+      inputType: question.inputType,
+      description: question.description,
+      correctAnswer: question.correctAnswer,
+      possibilities: [question.possibilities1, question.possibilities2,question.correctAnswer],
+    }));
+
+     
+
+              
+        const { data, error } = await supabase
+        .from('Quizz')
+        .update({ title: newQuizz.title, description: newQuizz.description , questions:mappedQuestions })
+        .eq('id', newQuizz.id)
+        .select()
+        
+    
+        console.log(error);
+        console.log(data);
        if(error){
          return NextResponse.json(
           { error: error},

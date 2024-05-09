@@ -55,7 +55,7 @@ export  function Edit() {
                       <>
                       <tr className="border-b hover:bg-gray-100 cursor-pointer">
                         <td className="py-2 px-4">
-                        <DialogQuizz quizz={quizz} edit={true}>
+                        <DialogQuizz edit={quizz}>
 
                         <button className="text-blue-500 hover:underline">{quizz?.title}</button>
                         </DialogQuizz>

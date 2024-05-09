@@ -5,6 +5,7 @@ import { Fragment, useState } from 'react'
 import NewForm from './NewQuizz';
 import Quizz from './Quizz';
 import HistoryQuizz from './HistoryQuizz';
+import EditQuizz from './EditQuizz';
 
 interface Props{
   children:React.ReactNode;
@@ -59,7 +60,7 @@ export default function DialogQuizz(props:Props) {
                   <div className="mt-2">
                     {props.history && <HistoryQuizz quizz={props.history} /> }
                     {props.quizz && <Quizz quizz={props.quizz} />} 
-                    {props.edit && <Quizz quizz={props.edit} />} 
+                    {props.edit && <EditQuizz edit={props.edit} />} 
                     
                   </div>
 

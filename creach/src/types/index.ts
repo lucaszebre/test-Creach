@@ -39,7 +39,7 @@ export const endGameSchema = z.object({
 
 const questionSchema = z.object({
   title: z.string(),
-  value:z.coerce.string().min(1, { message: 'Need a answer' }),
+  value:z.coerce.string().default('no answer choose'),
   description: z.string(),
   inputType: z.enum(["string", "number", "radio", "rating","textarea","select"]),
   options: z.array(z.string()).optional(),
@@ -92,6 +92,12 @@ export const newQuizzSchema = z.object({
   description: z.string().min(1,{message:'Need a description for the quizz'}),
   questions: z.array(questionSchema2).min(1,"Need at least one question"),
 });
+export const editQuizzSchema = z.object({
+  id:z.string().optional(),
+  title: z.string().min(1,{message:'Need a title for the quizz'}),
+  description: z.string().min(1,{message:'Need a description for the quizz'}),
+  questions: z.array(questionSchema2).min(1,"Need at least one question"),
+});
 
 
 export const questionTemplate = {
@@ -114,5 +120,7 @@ export type quizzType = z.infer<typeof quizSchema>;
 export type resultType = z.infer<typeof resultSchema>;
 export type answerType = z.infer<typeof answerSchema>;
 export type questionType = z.infer<typeof questionSchema>;
+export type questionType2 = z.infer<typeof questionSchema2>;
 export type historyType = z.infer<typeof HistorySchema>;
 export type newQuizzType = z.infer<typeof newQuizzSchema>;
+export type newEditQuizzType = z.infer<typeof editQuizzSchema>;
