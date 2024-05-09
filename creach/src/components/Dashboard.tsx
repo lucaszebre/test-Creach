@@ -1,18 +1,43 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable react/jsx-key */
+"use client"
 import { Button } from "@/components/ui/button"
-import { supabase } from "@/utils/supabase/client"
 import { JSX, SVGProps } from "react"
 import  DialogQuizz  from "./DialogQuizz"
 import DialogNewQuizz from "./DialogNewQuizz"
+import { useQuery } from "@tanstack/react-query"
+import { createClient } from "@/utils/supabase/client"
+import { quizzType } from "@/types"
 
-export default async function Dashboard() {
-  let { data: Quizz, error } = await supabase
+export default function Dashboard() {
+  const {
+    isFetching,
+    data,
+    isLoading
+  } = useQuery({
+    queryFn: async () => {
+      
+      const supabase = createClient()
+      
+  let { data: Result, error } = await supabase
   .from('Quizz')
-  .select('*')
+  .select('*');
+
+      return Result as unknown as quizzType[];
+    },
+    queryKey: ['quizz'],
+    enabled:true
+  })
+
+  
+  if(isLoading){
+    return (
+      <p>Loading...</p>
+    )
+  }
   return (
     
-      <main className="flex-1 py-8 px-6">
+      <main className="flex-1 py-8 px-6 h-full">
         <section className="mb-8">
           <div className="flex w-full justify-between items-center mb-4">
             <h2 className="text-xl font-bold">Quizzes</h2>
@@ -24,7 +49,7 @@ export default async function Dashboard() {
             </DialogNewQuizz>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {Quizz?.slice(-4).map((q,key)=>{
+            {data?.slice(-4).map((q,key)=>{
               return ( 
               <div key={key} className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="p-4">
@@ -42,16 +67,15 @@ export default async function Dashboard() {
         </section>
         <section>
           <h2 className="text-xl font-bold mb-4">List Quizz</h2>
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            <table className="w-full">
+          <div className="bg-white rounded-lg shadow-md ">
+            <table className="w-full h-full relative">
               <thead className="bg-gray-200">
                 <tr>
                   <th className="py-2 px-4 text-left">Quiz</th>
-                  <th className="py-2 px-4 text-left">Average Score</th>
                 </tr>
               </thead>
               <tbody>
-              {Quizz?.map((q,key)=>{
+              {data?.map((q,key)=>{
               return ( 
                 <tr className="border-b hover:bg-gray-100 cursor-pointer">
                   <DialogQuizz  quizz={q}>

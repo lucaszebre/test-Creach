@@ -2,7 +2,6 @@
 
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
-import NewForm from './NewQuizz';
 import Quizz from './Quizz';
 import HistoryQuizz from './HistoryQuizz';
 import EditQuizz from './EditQuizz';

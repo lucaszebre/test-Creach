@@ -2,18 +2,11 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable react/jsx-key */
 "use client"
-import { SchemaRegister, quizzType , quizSchema, questionType, historyType} from '@/types'
-import React, { useState } from 'react'
+import {  historyType} from '@/types'
+import React from 'react'
 
 
 const HistoryQuizz = (props:{quizz:historyType}) => {
-  
-
-
-
-    console.log(props.quizz)
-
-    
     
   return (
     <>
@@ -49,8 +42,8 @@ const HistoryQuizz = (props:{quizz:historyType}) => {
         })}
         </div>
 
-        <div>
-           {`Ton score est de ${props.quizz.score}`}
+        <div className='text-4xl font-bold'>
+           {`Ton score est de ${props.quizz.score} / ${props.quizz.Quizz?.questions.length}`}
         </div>
           
         </div>

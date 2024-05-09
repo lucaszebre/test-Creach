@@ -1,11 +1,13 @@
+/* eslint-disable react/jsx-no-undef */
 "use client"
 import { createClient } from '@/utils/supabase/client';
-import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { toast } from 'react-hot-toast';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
+
 
 const Profile = () => {
 
@@ -44,7 +46,6 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      console.log("logout trying")
       await logoutMutation.mutateAsync();
       router.refresh()
     } catch (error) {
@@ -52,21 +53,22 @@ const Profile = () => {
     }
   };
 
+  if(currentUser.isLoading){
+    return (
+      <p>Loading...</p>
+    )
+  }
+
   return (
     <>
       <DropdownMenu >
               <DropdownMenuTrigger asChild>
-                <Avatar className="h-9 w-9 cursor-pointer">
-                  <AvatarImage alt="@shadcn" src="/placeholder-avatar.jpg" />
-                  <AvatarFallback>{currentUser.data?.user?.email}</AvatarFallback>
-                  <span className="sr-only">Toggle user menu</span>
-                </Avatar>
+                  <span className='cursor-pointer'>{currentUser.data?.user?.email}</span>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className='bg-black p-5'>
-                <DropdownMenuItem className='cursor-pointer' >My Account</DropdownMenuItem>
-                <DropdownMenuItem className='cursor-pointer' >Settings</DropdownMenuItem>
+              <DropdownMenuContent className='bg-gray-900 text-white' >
+                
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className='cursor-pointer' onClick={handleLogout}>Logout</DropdownMenuItem>
+                <DropdownMenuItem className='cursor-pointer text-white' onClick={handleLogout}>Logout</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
     </>

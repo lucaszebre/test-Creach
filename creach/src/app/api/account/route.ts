@@ -1,4 +1,3 @@
-import prisma from '@/lib/db';
 import { SchemaRegister } from '@/lib/validator/register';
 import { createClient } from '@/utils/supabase/server';
 
@@ -7,31 +6,44 @@ export async function POST(req: Request) {
     
     try {
         // Validate input
-        let datad = await req.json();
+        let body = await req.json();
 
-        const validatedData = SchemaRegister.parse(datad);
+        const validateData = SchemaRegister.parse(body);
 
+        console.log(validateData);
+        let supabase = createClient();
+
+        
+        let { data: User } = await supabase
+            .from('User')
+            .select('*').eq('email',validateData.email)
+        
         // Check if user already exists
-        const existingUser = await prisma.user.findUnique({ where: { email: validatedData.email } });
-        if (existingUser) {
+
+        if (User?.length) {
             throw new Error("User already exists");
         }
 
-        const supabase = createClient()
-
+        // we register 
         const { data, error } = await supabase.auth.signUp({
-            email: validatedData.email,
-            password: validatedData.password
+            email: validateData.email,
+            password: validateData.password
             })
+        
 
         if (error){
             console.error(error)
             return new Response(error.message, { status: 400 })
         }
-        // Hash password and create user
-        await prisma.user.create({
-            data: { email: validatedData.email,  username: validatedData.name,id:data.user?.id , information:{} }
-        });
+        
+        // insert row in the user 
+        await supabase
+        .from('User')
+        .insert([
+         {email:validateData,id:data.user?.id,username:validateData.name} 
+        ])
+        .select()
+        
         return new Response('Registration sucessfull', { status: 200 })
     } catch (error) {
         if (error instanceof Error) {

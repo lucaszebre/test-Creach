@@ -92,14 +92,8 @@ export async function DELETE(req: Request, res: Response) {
   
     const body = await req.json();
 
-
     const config = configSchema.parse(body);
 
-
-
-     
-
-    
       const { data,error } = await supabase
       .from('Quizz')
       .delete()
@@ -117,9 +111,6 @@ export async function DELETE(req: Request, res: Response) {
          );
      }
 
-   
-
-    
      return NextResponse.json(
        {
          data: data,

@@ -31,7 +31,7 @@ export default async function RootLayout({
   <html lang="en">
     <body >
     <ReactQueryProvider>
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col h-full w-full">
       <header className="bg-gray-900 text-white py-4 px-6">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">QuizzOnDemand</h1>
@@ -73,9 +73,7 @@ export default async function RootLayout({
   position="top-center"
   reverseOrder={false}
 />
-<footer className="bg-gray-900 text-white py-4 px-6">
-        <div className="text-center">QuizzOnDemand by lucaszebre</div>
-      </footer>
+
     </div>
     </ReactQueryProvider>
 

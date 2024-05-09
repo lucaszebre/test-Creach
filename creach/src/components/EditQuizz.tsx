@@ -3,10 +3,8 @@
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { editQuizzSchema, newEditQuizzType, newQuizzSchema, newQuizzType, questionTemplate, questionType, questionType2, quizSchema, quizzType } from "@/types"
-import { supabase } from "@/utils/supabase/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { QueryClient } from "@tanstack/query-core"
-
 import react, { useState } from "react"
 import { useFieldArray, useForm} from "react-hook-form"
 import toast from "react-hot-toast"
@@ -115,7 +113,9 @@ export default function EditQuizz(props:{edit:quizzType}) {
      
 
 {fields.map((field, index) => (
-            <Card className="p-10" key={field.id}>
+            <Card className="p-10 relative" key={field.id}>
+
+<svg onClick={() => remove(index)}  className="absolute cursor-pointer top-5 right-5" width="30" height="30" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.49991 0.876892C3.84222 0.876892 0.877075 3.84204 0.877075 7.49972C0.877075 11.1574 3.84222 14.1226 7.49991 14.1226C11.1576 14.1226 14.1227 11.1574 14.1227 7.49972C14.1227 3.84204 11.1576 0.876892 7.49991 0.876892ZM1.82707 7.49972C1.82707 4.36671 4.36689 1.82689 7.49991 1.82689C10.6329 1.82689 13.1727 4.36671 13.1727 7.49972C13.1727 10.6327 10.6329 13.1726 7.49991 13.1726C4.36689 13.1726 1.82707 10.6327 1.82707 7.49972ZM4.50003 7C4.22389 7 4.00003 7.22386 4.00003 7.5C4.00003 7.77614 4.22389 8 4.50003 8H10.5C10.7762 8 11 7.77614 11 7.5C11 7.22386 10.7762 7 10.5 7H4.50003Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
             <FormField
               control={form.control}
               
@@ -236,15 +236,15 @@ export default function EditQuizz(props:{edit:quizzType}) {
           ))}
           
 
-          <Button
+          {/* <Button
             type="button"
             variant="outline"
             size="sm"
             className="mt-2 w-full bg-red-600 text-white"
-            onClick={() => remove(-1)} // delete the last question 
+            // delete the last question 
           >
             Remove Question
-          </Button>
+          </Button> */}
           <Button
             type="button"
             variant="outline"

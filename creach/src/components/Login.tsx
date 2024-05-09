@@ -51,9 +51,7 @@ export function Login() {
           password:values.password,})  
         if(data.error){
           toast.error('Error to login'
-           
-            // Other properties for the toast can be added here
-        );
+                   );
         }
         queryClient.refetchQueries({ queryKey: [`session`] })
         router.push('/')
@@ -67,7 +65,7 @@ export function Login() {
     <Card className="p-5">
       <div className="flex flex-row content-center justify-center  w-full items-center">
         <div>
-                  <h1>QUIZZAI</h1>
+        <h1>QUIZZONDEMAND</h1>
 
         </div>
 

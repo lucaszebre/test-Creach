@@ -1,10 +1,5 @@
 "use client"
-import Link from "next/link"
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
-import { DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
-import { DialogTrigger, DialogTitle, DialogDescription, DialogHeader, DialogFooter, DialogContent, Dialog } from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
+
 import { createClient } from "@/utils/supabase/client"
 import { useQuery } from "@tanstack/react-query"
 import { quizzType, resultType } from "@/types"
@@ -35,6 +30,11 @@ export  function Edit() {
     enabled:true
   })
 
+  if(isLoading){
+    return (
+      <p>Loading...</p>
+    )
+  }
 
 
     return (

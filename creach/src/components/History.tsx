@@ -1,21 +1,26 @@
 "use client"
-import Link from "next/link"
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
-import { DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
-import { DialogTrigger, DialogTitle, DialogDescription, DialogHeader, DialogFooter, DialogContent, Dialog } from "@/components/ui/dialog"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
 import { createClient } from "@/utils/supabase/client"
 import { useQuery } from "@tanstack/react-query"
 import { resultType } from "@/types"
-import { DatabaseZap } from "lucide-react"
+import { format } from 'date-fns';
+
 import DialogQuizz from "./DialogQuizz"
 
 export  function History() {
   
-  const supabase = createClient();
+  let supabase = createClient()
 
+  const currentUser =useQuery({
+    queryFn: async () => {
+      const supabase = createClient()
+      const { data} = await supabase.auth.getUser()
 
+      return data
+    },
+    queryKey: ['user'],
+    enabled:true
+  })
+  
 
 
   const {
@@ -27,7 +32,7 @@ export  function History() {
       
   let { data: Result, error } = await supabase
   .from('Result')
-  .select('*,Quizz(*)');
+  .select('*,Quizz(*)').eq('user_id',currentUser.data?.user?.id);
 
       return Result as unknown as resultType[];
     },
@@ -35,6 +40,14 @@ export  function History() {
     enabled:true
   })
 
+
+  if(isLoading){
+    return(
+      <p>Loading...</p>
+    )
+  }
+
+  console.log(data)
 
 
     return (
@@ -64,8 +77,8 @@ export  function History() {
                         </DialogQuizz>
 
                       </td>
-                      <td className="py-2 px-4">{r.score}</td>
-                      <td className="py-2 px-4">{r.time}</td>
+                      <td className="py-2 px-4">{`${r.score} / ${r.Quizz?.questions.length}`}</td>
+                      <td className="py-2 px-4">{format(r.time, 'yyyy-MM-dd HH:mm:ss')}</td>
                       </tr>
                    
 

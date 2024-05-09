@@ -109,7 +109,7 @@ const Quizz = (props:{quizz:quizzType}) => {
           </Form>
         </Card>
       ) : (
-        <p>Ton score est de {score}</p>
+        <p className='text-4xl font-bold'>Ton score est de {score} / {props.quizz.questions.length}</p>
       )}
     </>
   );

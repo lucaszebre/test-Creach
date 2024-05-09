@@ -42,9 +42,9 @@ import toast, { Toaster } from "react-hot-toast"
       async function onSubmit(values: z.infer<typeof SchemaRegister>) {
         try {
             setIsLoading(true);
-    
+           
             // Attempt to register the user
-            const response = await axios.post('/api/account/',{
+            const response = await axios.post('/api/account',{
                 name:values.name,
                 email:values.email,
                 password:values.password
@@ -57,14 +57,9 @@ import toast, { Toaster } from "react-hot-toast"
             }
     
         } catch (error) {
-            if (error instanceof Error) {
-                toast.error('Registration failed');
-
-                
-            } else {
-                // Handle non-Error objects
+           
               toast.error('Registration failed');
-            }
+            
         } finally {
             setIsLoading(false);
         }
@@ -76,7 +71,7 @@ import toast, { Toaster } from "react-hot-toast"
 
                 <div className="flex flex-row content-center justify-center  w-full items-center">
                     <div>
-                    <h1>QUIZZAI</h1>
+                    <h1>QUIZZONDEMAND</h1>
                     </div>
                 </div>        
             <CardHeader className="space-y-1">
