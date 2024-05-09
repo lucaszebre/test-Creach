@@ -1,0 +1,49 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+model User {
+  id                     String     @id @unique @default(uuid())
+  username               String     @unique
+  email                  String     @unique
+  fullName               String?
+  gender                 String?
+  bio                    String?
+  avatarkey              String?
+  profilePictureUrl      String?
+  isPrivate              Boolean    @default(false)
+  joinedAt               DateTime   @default(now())
+  isEmailVerified        Boolean    @default(false)
+  quizz                  Quizz[]
+  result                 Result[]    
+  information            Json
+}
+
+model Quizz {
+  id          String    @id @unique @default(uuid())
+  title       String
+  description String?
+  questions   Json
+  results     Result[]  
+  userId      String    @map("user_id") 
+  user        User      @relation(fields: [userId], references: [id]) 
+}
+
+model Result {
+  id        String    @id @unique @default(uuid())
+  score     Float
+  time      DateTime  @default(now())
+  answer    Json
+  quizzId   String    @map("quizz_id") 
+  userId      String    @map("user_id") 
+  quizz     Quizz     @relation(fields: [quizzId], references: [id]) 
+  user     User     @relation(fields: [userId], references: [id]) 
+
+}
+
