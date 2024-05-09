@@ -1,5 +1,5 @@
 import prisma from "@/lib/db";
-import {  editQuizzSchema, newQuizzSchema } from "@/types";
+import {  configSchema, editQuizzSchema, newQuizzSchema } from "@/types";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
@@ -46,6 +46,68 @@ export async function POST(req: Request, res: Response) {
       .select();
     
         
+       if(error){
+         return NextResponse.json(
+          { error: error},
+           {
+             status: 400,
+           }
+         );
+     }
+
+   
+
+    
+     return NextResponse.json(
+       {
+         data: data,
+      },
+       {
+         status: 200,
+       }
+     );
+  } catch (error) {
+      return NextResponse.json(
+        { error: error},
+        {
+          status: 400,
+        }
+      );
+    
+  }
+}
+
+export async function DELETE(req: Request, res: Response) {
+  try {
+    const supabase = createClient()
+    const user = supabase.auth.getUser()
+    if(!user){
+        return NextResponse.json(
+            { error: "Need to be login" },
+            {
+              status: 400,
+            }
+          );
+    }
+  
+    const body = await req.json();
+
+
+    const config = configSchema.parse(body);
+
+
+
+     
+
+    
+      const { data,error } = await supabase
+      .from('Quizz')
+      .delete()
+      .eq('id', config.id)
+        
+        
+      console.log(data)
+      console.log(error)
        if(error){
          return NextResponse.json(
           { error: error},

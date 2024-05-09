@@ -58,7 +58,7 @@ export  function History() {
                       <>
                       <tr className="border-b hover:bg-gray-100 cursor-pointer">
                         <td className="py-2 px-4">
-                        <DialogQuizz quizz={r} history={true}>
+                        <DialogQuizz history={r}>
 
                         <button className="text-blue-500 hover:underline">{r.Quizz?.title}</button>
                         </DialogQuizz>

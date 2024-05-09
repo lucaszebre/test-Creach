@@ -9,6 +9,7 @@ import { createClient } from "@/utils/supabase/client"
 import { useQuery } from "@tanstack/react-query"
 import { quizzType, resultType } from "@/types"
 import DialogQuizz from "./DialogQuizz"
+import DialogDelete from "./DialogDelete"
 
 export  function Edit() {
   
@@ -43,9 +44,10 @@ export  function Edit() {
           <h2 className="text-xl font-bold mb-4">Quizz List</h2>
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             <table className="w-full">
-              <thead className="bg-gray-200">
+              <thead className="bg-gray-200 w-full">
                 <tr>
                   <th className="py-2 px-4 text-left">Quizz</th>
+                  <th className="py-2 px-4 text-left">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -55,11 +57,19 @@ export  function Edit() {
                       <>
                       <tr className="border-b hover:bg-gray-100 cursor-pointer">
                         <td className="py-2 px-4">
-                        <DialogQuizz edit={quizz}>
 
                         <button className="text-blue-500 hover:underline">{quizz?.title}</button>
-                        </DialogQuizz>
 
+                      </td>
+                      <td className="flex flex-row justify-between w-full items-center px-5">
+                      <DialogQuizz edit={quizz}>
+
+                        <span className="hover:underline cursor-pointer">Edit</span>
+                      </DialogQuizz>
+                      <DialogDelete id={quizz.id ? quizz.id:""} title={quizz.title ? quizz.title : ""}>
+                      <span className="hover:underline cursor-pointer">Delete</span>
+
+                      </DialogDelete>
                       </td>
                       
                       </tr>

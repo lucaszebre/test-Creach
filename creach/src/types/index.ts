@@ -111,6 +111,11 @@ export const questionTemplate = {
 };
 
 
+export const configSchema = z.object({
+  
+    id: z.string(),
+});
+
 
 
 export const answerSchema = z.array(z.coerce.string());
