@@ -62,7 +62,7 @@ export default function NewQuizz() {
 
     queryClient.refetchQueries({ queryKey: [`quizz`] }) // refect the quizz to get the last one
     setIsLoading(false)
-
+     
 
 }
 

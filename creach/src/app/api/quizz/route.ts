@@ -1,9 +1,9 @@
 import prisma from "@/lib/db";
-import { strict_output } from "@/lib/gpt";
-import { getQuestionsSchema } from "@/types";
+import {  newQuizzSchema } from "@/types";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
+import { v4 as uuidv4 } from 'uuid';
 
 
 export const runtime = "nodejs";
@@ -23,59 +23,57 @@ export async function POST(req: Request, res: Response) {
     }
   
     const body = await req.json();
-    const { amount, topic, type } = getQuestionsSchema.parse(body);
-    let questions: any;
-    if (type === "open_ended") {
-      questions = await strict_output(
-        "You are a helpful AI that is able to generate a pair of question and answers, the length of each answer should not be more than 15 words, store all the pairs of answers and questions in a JSON array",
-        new Array(amount).fill(
-          `You are to generate a random hard open-ended questions about ${topic}`
-        ),
-        {
-          question: "question",
-          answer: "answer with max length of 15 words",
-        }
-      );
-    } else if (type === "mcq") {
-      questions = await strict_output(
-        "You are a helpful AI that is able to generate mcq questions and answers, the length of each answer should not be more than 15 words, store all answers and questions and options in a JSON array",
-        new Array(amount).fill(
-          `You are to generate a random hard mcq question about ${topic}`
-        ),
-        {
-          question: "question",
-          answer: "answer with max length of 15 words",
-          option1: "option1 with max length of 15 words",
-          option2: "option2 with max length of 15 words",
-          option3: "option3 with max length of 15 words",
-        }
-      );
-    }
-    return NextResponse.json(
-      {
-        questions: questions,
+    const newQuizz = newQuizzSchema.parse(body);
+
+
+    // need to recreate the json to fit , so we can the quizz nicely
+    const mappedQuestions = newQuizz.questions.map(question => ({
+      title: question.title,
+      value: question.value ?? "",
+      inputType: question.inputType,
+      description: question.description,
+      correctAnswer: question.correctAnswer,
+      possibilities: [question.possibilities1, question.possibilities2,question.correctAnswer],
+    }));
+
+     
+
+      const { data, error } = await supabase
+      .from('Quizz')
+      .insert([
+        { id:uuidv4(),title: newQuizz.title, description: newQuizz.description , questions:mappedQuestions },
+      ])
+      .select();
+    
+        
+       if(error){
+         return NextResponse.json(
+          { error: error},
+           {
+             status: 400,
+           }
+         );
+     }
+
+   
+
+    
+     return NextResponse.json(
+       {
+         data: data,
       },
-      {
-        status: 200,
-      }
-    );
+       {
+         status: 200,
+       }
+     );
   } catch (error) {
-    if (error instanceof ZodError) {
       return NextResponse.json(
-        { error: error.issues },
+        { error: error},
         {
           status: 400,
         }
       );
-    } else {
-      console.error("elle gpt error", error);
-      return NextResponse.json(
-        { error: "An unexpected error occurred." },
-        {
-          status: 500,
-        }
-      );
-    }
+    
   }
 }
 

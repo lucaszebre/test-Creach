@@ -38,6 +38,8 @@ const RenderInputComponent = (inputType:string, field:any, possibilities:any) =>
       );
     case 'rating':
       return <Input type="number" {...field} />;
+      case 'string':
+      return <Input type="string" {...field} />;
     default:
       return null;
   }
