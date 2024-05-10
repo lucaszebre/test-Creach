@@ -24,24 +24,26 @@ export async function POST(req: Request) {
         }
 
         // we register 
-        const { data, error } = await supabase.auth.signUp({
+        const {  data } = await supabase.auth.signUp({
             email: validateData.email,
             password: validateData.password
             })
         
+            console.log(data)
+      
+        // insert row in the user 
+        const {  error }=  await supabase
+        .from('User')
+        .insert([
+         {email:validateData,id:data.user?.id,username:validateData.name} 
+        ])
+        .select()
 
         if (error){
             console.error(error)
             return new Response(error.message, { status: 400 })
         }
         
-        // insert row in the user 
-        await supabase
-        .from('User')
-        .insert([
-         {email:validateData,id:data.user?.id,username:validateData.name} 
-        ])
-        .select()
         
         return new Response('Registration sucessfull', { status: 200 })
     } catch (error) {
