@@ -93,7 +93,7 @@ export async function DELETE(req: Request, res: Response) {
     const body = await req.json();
 
     const config = configSchema.parse(body);
-    
+
     // need to delete the result also before 
     await supabase
     .from('Result')
@@ -210,38 +210,3 @@ export async function PUT(req: Request, res: Response) {
   }
 }
 
-export async function GET(req: Request, res: Response) {
-  try {
-    const supabase = createClient()
-    const user = supabase.auth.getUser()
-    if(!user){
-        return NextResponse.json(
-            { error: "Need to be login" },
-            {
-              status: 400,
-            }
-          );
-    }
-  
-    const quizzs = await prisma.quizz.findMany({
-      include:{results:true}})
-    return NextResponse.json(
-      {
-        quizzs: quizzs,
-      },
-      {
-        status: 200,
-      }
-    );
-  } catch (error) {
-    if (error instanceof ZodError) {
-      return NextResponse.json(
-        { error: error.issues },
-        {
-          status: 400,
-        }
-      );
-    
-    
-  }
-  }}
