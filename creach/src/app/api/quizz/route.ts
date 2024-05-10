@@ -107,8 +107,6 @@ export async function DELETE(req: Request, res: Response) {
      
         
         
-      console.log(data)
-      console.log(error)
        if(error){
          return NextResponse.json(
           { error: error},
@@ -152,7 +150,6 @@ export async function PUT(req: Request, res: Response) {
   
     const body = await req.json();
 
-    console.log(body)
     const newQuizz = editQuizzSchema.parse(body);
 
 
@@ -176,8 +173,7 @@ export async function PUT(req: Request, res: Response) {
         .select()
         
     
-        console.log(error);
-        console.log(data);
+       
        if(error){
          return NextResponse.json(
           { error: error},

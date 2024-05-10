@@ -47,7 +47,6 @@ export  function History() {
     )
   }
 
-  console.log(data)
 
 
     return (

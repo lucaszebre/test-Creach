@@ -16,6 +16,7 @@ import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
 import RenderInputComponent from './RenderInput'
 import Image from 'next/image'
+import { useQueryClient } from '@tanstack/react-query'
 
 
 
@@ -36,9 +37,9 @@ const Quizz = (props:{quizz:quizzType}) => {
       control: form.control,
     })
 
-    console.log(props.quizz)
 
 
+    const queryClient = useQueryClient();
 
     
     async function onSubmit(values: z.infer<typeof quizSchema>) {
@@ -54,6 +55,8 @@ const Quizz = (props:{quizz:quizzType}) => {
                toast.success("Quizz submit");
               
            }
+           // need to fetch the updated result now
+           queryClient.resetQueries({ queryKey: ['result',] })
            setScore(response.data.score)
   
       } catch (error) {

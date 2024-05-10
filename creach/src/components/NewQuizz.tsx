@@ -52,7 +52,6 @@ export default function NewQuizz() {
   async function  onSubmit(values: z.infer<typeof newQuizzSchema>) {
     setIsLoading(true)
     
-    console.log("newquizz",values);
      const data = await axios.post('/api/quizz',values)  
      if(!data){
        toast.error('Error to create a quizz');

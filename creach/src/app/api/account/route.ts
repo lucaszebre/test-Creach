@@ -10,7 +10,6 @@ export async function POST(req: Request) {
 
         const validateData = SchemaRegister.parse(body);
 
-        console.log(validateData);
         let supabase = createClient();
 
         

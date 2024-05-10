@@ -56,7 +56,6 @@ export async function updateSession(request: NextRequest) {
 
   const user = await supabase.auth.getUser()
 
-  console.log("haha");
   
   if (!user) {
     return NextResponse.redirect(new URL('/auth', request.url))

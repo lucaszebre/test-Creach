@@ -64,8 +64,6 @@ export default function EditQuizz(props:{edit:quizzType}) {
   
   const [file, setFile] = useState<any>();
   function handleChange(e:any) {
-      console.log(e[0]);
-      console.log(URL.createObjectURL(e[0]))
       setFile(URL.createObjectURL(e[0]));
   }
 
@@ -73,7 +71,6 @@ export default function EditQuizz(props:{edit:quizzType}) {
   async function  onSubmit(values: z.infer<typeof editQuizzSchema>) {
     setIsLoading(true)
     
-    console.log("newquizz",values);
      const data = await axios.put('/api/quizz',values)  
      if(!data){
        toast.error('Error to update a quizz');
