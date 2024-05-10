@@ -16,6 +16,7 @@ Welcome to the Quiz App! This application allows users to participate in quizzes
 - **Backend**: Supabase
 - **Form Management**: React Hook Form
 - **Type Safety**: Zod
+- **Query Data  React-QUery 
 
 ## Getting Started
 
