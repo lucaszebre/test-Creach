@@ -63,6 +63,7 @@ export const quizSchema = z.object({
   title: z.string(),
   description: z.string(),
   questions: z.array(questionSchema),
+  header:z.string().default('/public/header.png')
 });
 
 export const resultSchema = z.object({
@@ -90,13 +91,16 @@ const HistorySchema = z.object({
 export const newQuizzSchema = z.object({
   title: z.string().min(1,{message:'Need a title for the quizz'}),
   description: z.string().min(1,{message:'Need a description for the quizz'}),
+  header:z.string().default('/public/header.png'),
   questions: z.array(questionSchema2).min(1,"Need at least one question"),
+  
 });
 export const editQuizzSchema = z.object({
   id:z.string().optional(),
   title: z.string().min(1,{message:'Need a title for the quizz'}),
   description: z.string().min(1,{message:'Need a description for the quizz'}),
   questions: z.array(questionSchema2).min(1,"Need at least one question"),
+  header:z.string().default('/public/header.png'),
 });
 
 

@@ -58,16 +58,16 @@ export  function Edit() {
                       <tr className="border-b hover:bg-gray-100 cursor-pointer">
                         <td className="py-2 px-4">
 
-                        <button className="text-blue-500 hover:underline">{quizz?.title}</button>
+                        <button className="text-blue-500 dg:text-base text-xs hover:underline">{quizz?.title}</button>
 
                       </td>
                       <td className="flex flex-row justify-between w-full items-center px-5">
                       <DialogQuizz edit={quizz}>
 
-                        <span className="hover:underline cursor-pointer">Edit</span>
+                        <span className="hover:underline dg:text-base text-xs cursor-pointer">Edit</span>
                       </DialogQuizz>
                       <DialogDelete id={quizz.id ? quizz.id:""} title={quizz.title ? quizz.title : ""}>
-                      <span className="hover:underline cursor-pointer">Delete</span>
+                      <span className="hover:underline dg:text-base text-xs cursor-pointer">Delete</span>
 
                       </DialogDelete>
                       </td>

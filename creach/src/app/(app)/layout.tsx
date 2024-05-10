@@ -11,6 +11,7 @@ import Logout from '@/components/Profile';
 import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu';
 import Profile from '@/components/Profile';
+import MenuMobile from '@/components/MenuMobile';
 
 
 export default async function RootLayout({
@@ -36,7 +37,7 @@ export default async function RootLayout({
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">QuizzOnDemand</h1>
           <nav className="flex items-center space-x-4">
-            <ul className="flex space-x-4">
+            <ul className="md:flex hidden  space-x-4">
               <li>
                 <Link className="hover:underline" href="/">
                   Quizzes
@@ -59,6 +60,7 @@ export default async function RootLayout({
               </li>
               
             </ul>
+            <MenuMobile />
             
           </nav>
         </div>

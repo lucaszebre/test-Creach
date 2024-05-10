@@ -61,6 +61,7 @@ export default function NewQuizz() {
      }
 
     queryClient.invalidateQueries({ queryKey: [`quizz`] }) // refect the quizz to get the last one
+    queryClient.refetchQueries({ queryKey: [`quizz`] }) // refect the quizz to get the last one
     setIsLoading(false)
      
 
@@ -139,7 +140,8 @@ export default function NewQuizz() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            />  
+            
             <FormField
               control={form.control}
               name={`questions.${index}.inputType`}

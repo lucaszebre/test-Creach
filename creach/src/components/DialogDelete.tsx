@@ -15,6 +15,7 @@ export default function DialogDelete(props:{children:react.ReactNode,id:string,t
           id: props.id
         }
       }
+    
     const deleteMutation = useMutation({
         mutationFn: async () => {
             const  data = await axios.delete('/api/quizz',config)
@@ -35,11 +36,11 @@ export default function DialogDelete(props:{children:react.ReactNode,id:string,t
         
     })
   return (
-    <AlertDialog defaultClose>
+    <AlertDialog >
       <AlertDialogTrigger asChild>
         {props.children}
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="w-[80%] rounded">
         <AlertDialogHeader>
           <AlertDialogTitle>{`Delete Quiz `}</AlertDialogTitle>
           <AlertDialogDescription>{`Are you sure you want to delete this quiz? "${props.title}"`}</AlertDialogDescription>

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-no-undef */
 "use client"
 import { Input } from "@/components/ui/input"
@@ -14,9 +15,12 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "
 import axios from "axios"
 import { Card } from "./ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import Image from "next/image"
+
 
 export default function EditQuizz(props:{edit:quizzType}) {
   const [isLoading,setIsLoading] = useState(false)
+//   const [files,setFiles] = useState<string>(props.edit.header)
   const queryClient = new QueryClient()
   
  
@@ -35,10 +39,12 @@ export default function EditQuizz(props:{edit:quizzType}) {
     id:props.edit.id,
     title:props.edit.title,
     description:props.edit.description,
-    questions:questions
+    questions:questions,
+    header:props.edit.header,
   }
+
+
   
-  console.log(newValue)
 
   const defaultValues: Partial<newEditQuizzType> = newValue;
 
@@ -56,6 +62,12 @@ export default function EditQuizz(props:{edit:quizzType}) {
     control: form.control,
   })
   
+  const [file, setFile] = useState<any>();
+  function handleChange(e:any) {
+      console.log(e[0]);
+      console.log(URL.createObjectURL(e[0]))
+      setFile(URL.createObjectURL(e[0]));
+  }
 
 
   async function  onSubmit(values: z.infer<typeof editQuizzSchema>) {
@@ -76,8 +88,7 @@ export default function EditQuizz(props:{edit:quizzType}) {
 }
 
   return (
-    <div className="w-full ">
-      
+    <div className="w-full relativ ">
       <Form {...form} >
       <form  onSubmit={form.handleSubmit(onSubmit)} className="p-3 content-start items-start flex-col space-y-8">
         <FormField
@@ -94,6 +105,7 @@ export default function EditQuizz(props:{edit:quizzType}) {
             </FormItem>
           )}
         /> 
+    
         <FormField
           control={form.control}
           name="description"
@@ -108,6 +120,8 @@ export default function EditQuizz(props:{edit:quizzType}) {
             </FormItem>
           )}
         /> 
+       
+
 
 
      
@@ -148,7 +162,8 @@ export default function EditQuizz(props:{edit:quizzType}) {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> 
+            
             <FormField
               control={form.control}
               name={`questions.${index}.inputType`}

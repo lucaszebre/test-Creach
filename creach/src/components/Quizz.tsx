@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable react/jsx-key */
 "use client"
@@ -14,6 +15,8 @@ import { z } from 'zod'
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
 import RenderInputComponent from './RenderInput'
+import Image from 'next/image'
+
 
 
 const Quizz = (props:{quizz:quizzType}) => {
@@ -32,6 +35,8 @@ const Quizz = (props:{quizz:quizzType}) => {
       name: "questions",
       control: form.control,
     })
+
+    console.log(props.quizz)
 
 
 
@@ -61,7 +66,10 @@ const Quizz = (props:{quizz:quizzType}) => {
   return (
     <>
       {!score ? (
-        <Card className="p-5">
+        <Card className="p-5 relative">
+          <div className=' h-[250px] relative rounded w-full'>
+            <Image className='rounded' fill src={'/image.jpg'} alt='quizz-avatar' />
+          </div>
           <Toaster />
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold text-center">{props.quizz.title}</CardTitle>
@@ -87,7 +95,7 @@ const Quizz = (props:{quizz:quizzType}) => {
                         </FormDescription>
                         <div className='flex flex-row justify-between w-full'>
                           {props.quizz.questions[index].inputType !== 'rating' && props.quizz.questions[index].inputType !== 'radio' && props.quizz.questions[index].inputType !== 'select' && props.quizz.questions[index]?.possibilities && props.quizz.questions[index]?.possibilities?.map((p) => (
-                            <span className='p-2 underline' key={p}>
+                            <span className='p-2 dg:text-base  text-xs underline' key={p}>
                               {p}
                             </span>
                           ))}

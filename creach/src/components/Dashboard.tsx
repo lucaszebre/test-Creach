@@ -52,9 +52,11 @@ export default function Dashboard() {
             {data?.slice(-4).map((q,key)=>{
               return ( 
               <div key={key} className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="p-4">
-                <h3 className="text-lg font-bold mb-2">{q.title}</h3>
-                <p className="text-gray-600 mb-4">{q.description}</p>
+              <div className="p-4 flex flex-col justify-between h-full">
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-lg font-bold mb-2">{q.title}</h3>
+                  <p className="text-gray-600 mb-4">{q.description}</p>
+                </div>
                  <DialogQuizz  quizz={q}>
                  <Button>Start Quiz</Button>
                   </DialogQuizz> 

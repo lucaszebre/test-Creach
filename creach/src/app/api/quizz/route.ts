@@ -93,11 +93,19 @@ export async function DELETE(req: Request, res: Response) {
     const body = await req.json();
 
     const config = configSchema.parse(body);
+    
+    // need to delete the result also before 
+    await supabase
+    .from('Result')
+    .delete()
+    .eq('quizz_id', config.id)
 
       const { data,error } = await supabase
       .from('Quizz')
       .delete()
       .eq('id', config.id)
+        
+     
         
         
       console.log(data)

@@ -12,7 +12,7 @@ function Auth() {
 
     <div className=" relative mt-5 mb-5 w-full h-screen flex col content-center items-center justify-center ">
     
-        <Tabs defaultValue="register" className="max-w-[400px]">
+        <Tabs defaultValue="register" className="sm:max-w-[400px] sm:w-full w-[80%]">
         <TabsList>
           <TabsTrigger value="login">Login</TabsTrigger>
           <TabsTrigger value="register">Register</TabsTrigger>

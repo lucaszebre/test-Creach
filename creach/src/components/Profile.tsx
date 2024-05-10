@@ -68,7 +68,7 @@ const Profile = () => {
               <DropdownMenuContent className='bg-gray-900 text-white' >
                 
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className='cursor-pointer text-white' onClick={handleLogout}>Logout</DropdownMenuItem>
+                <DropdownMenuItem className='cursor-pointer md:text-white text-black' onClick={handleLogout}>Logout</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
     </>
