@@ -29,7 +29,6 @@ export async function POST(req: Request) {
             password: validateData.password
             })
         
-            console.log(data)
       
         // insert row in the user 
         const {  error }=  await supabase
